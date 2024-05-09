@@ -34,6 +34,13 @@
             this.saveBinaryDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeBinaryDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertSelectedRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ParamMain_DGV = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -45,6 +52,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.UnknownGeoHitTableSection_DGV = new System.Windows.Forms.DataGridView();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -62,16 +70,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.dataGridView5 = new System.Windows.Forms.DataGridView();
+            this.EffectParams_UnknownSection_DGV = new System.Windows.Forms.DataGridView();
             this.EffectParam_NameSelectComboBox = new System.Windows.Forms.ComboBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
             this.FilePathInfoLBL = new System.Windows.Forms.Label();
             this.FilePah_LBL = new System.Windows.Forms.Label();
-            this.UnknownGeoHitTableSection_DGV = new System.Windows.Forms.DataGridView();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ParamMain_DGV)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -85,20 +89,21 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UnknownGeoHitTableSection_DGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GeoHitItemTableDGV)).BeginInit();
             this.tabPage5.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabPage7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EffectParamsColorSectionDGV)).BeginInit();
             this.tabPage8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UnknownGeoHitTableSection_DGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EffectParams_UnknownSection_DGV)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
             this.toolsToolStripMenuItem,
             this.infoToolStripMenuItem,
             this.helpToolStripMenuItem});
@@ -122,29 +127,76 @@
             // openBinaryDataToolStripMenuItem
             // 
             this.openBinaryDataToolStripMenuItem.Name = "openBinaryDataToolStripMenuItem";
-            this.openBinaryDataToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openBinaryDataToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.openBinaryDataToolStripMenuItem.Text = "Open";
             this.openBinaryDataToolStripMenuItem.Click += new System.EventHandler(this.Open_BinData);
             // 
             // saveBinaryDataToolStripMenuItem
             // 
             this.saveBinaryDataToolStripMenuItem.Name = "saveBinaryDataToolStripMenuItem";
-            this.saveBinaryDataToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveBinaryDataToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.saveBinaryDataToolStripMenuItem.Text = "Save";
             this.saveBinaryDataToolStripMenuItem.Click += new System.EventHandler(this.Save_BinData);
             // 
             // closeBinaryDataToolStripMenuItem
             // 
             this.closeBinaryDataToolStripMenuItem.Name = "closeBinaryDataToolStripMenuItem";
-            this.closeBinaryDataToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.closeBinaryDataToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.closeBinaryDataToolStripMenuItem.Text = "Close";
             this.closeBinaryDataToolStripMenuItem.Click += new System.EventHandler(this.Close_BinData);
             // 
             // createToolStripMenuItem
             // 
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.createToolStripMenuItem.Text = "Create";
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addRowToolStripMenuItem,
+            this.deleteRowToolStripMenuItem,
+            this.insertSelectedRowToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // addRowToolStripMenuItem
+            // 
+            this.addRowToolStripMenuItem.Name = "addRowToolStripMenuItem";
+            this.addRowToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.addRowToolStripMenuItem.Text = "Add Row";
+            // 
+            // deleteRowToolStripMenuItem
+            // 
+            this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
+            this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.deleteRowToolStripMenuItem.Text = "Delete Row";
+            // 
+            // insertSelectedRowToolStripMenuItem
+            // 
+            this.insertSelectedRowToolStripMenuItem.Name = "insertSelectedRowToolStripMenuItem";
+            this.insertSelectedRowToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.insertSelectedRowToolStripMenuItem.Text = "Insert Selected Row";
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // infoToolStripMenuItem
+            // 
+            this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.infoToolStripMenuItem.Text = "Info";
+            this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
             // 
             // ParamMain_DGV
             // 
@@ -278,6 +330,18 @@
             this.splitContainer1.SplitterDistance = 195;
             this.splitContainer1.TabIndex = 1;
             // 
+            // UnknownGeoHitTableSection_DGV
+            // 
+            this.UnknownGeoHitTableSection_DGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UnknownGeoHitTableSection_DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.UnknownGeoHitTableSection_DGV.Location = new System.Drawing.Point(0, 0);
+            this.UnknownGeoHitTableSection_DGV.Name = "UnknownGeoHitTableSection_DGV";
+            this.UnknownGeoHitTableSection_DGV.RowTemplate.Height = 21;
+            this.UnknownGeoHitTableSection_DGV.Size = new System.Drawing.Size(193, 371);
+            this.UnknownGeoHitTableSection_DGV.TabIndex = 9;
+            // 
             // label8
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -407,7 +471,7 @@
             this.tabPage8.Controls.Add(this.label4);
             this.tabPage8.Controls.Add(this.comboBox2);
             this.tabPage8.Controls.Add(this.label3);
-            this.tabPage8.Controls.Add(this.dataGridView5);
+            this.tabPage8.Controls.Add(this.EffectParams_UnknownSection_DGV);
             this.tabPage8.Controls.Add(this.EffectParam_NameSelectComboBox);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
@@ -444,14 +508,14 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Name :";
             // 
-            // dataGridView5
+            // EffectParams_UnknownSection_DGV
             // 
-            this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView5.Location = new System.Drawing.Point(6, 6);
-            this.dataGridView5.Name = "dataGridView5";
-            this.dataGridView5.RowTemplate.Height = 21;
-            this.dataGridView5.Size = new System.Drawing.Size(565, 367);
-            this.dataGridView5.TabIndex = 2;
+            this.EffectParams_UnknownSection_DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.EffectParams_UnknownSection_DGV.Location = new System.Drawing.Point(6, 6);
+            this.EffectParams_UnknownSection_DGV.Name = "EffectParams_UnknownSection_DGV";
+            this.EffectParams_UnknownSection_DGV.RowTemplate.Height = 21;
+            this.EffectParams_UnknownSection_DGV.Size = new System.Drawing.Size(565, 367);
+            this.EffectParams_UnknownSection_DGV.TabIndex = 2;
             // 
             // EffectParam_NameSelectComboBox
             // 
@@ -469,27 +533,18 @@
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage6.Size = new System.Drawing.Size(591, 433);
             this.tabPage6.TabIndex = 3;
-            this.tabPage6.Text = "tabPage6";
+            this.tabPage6.Text = "ObjFlow";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
-            // toolsToolStripMenuItem
+            // tabPage9
             // 
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // infoToolStripMenuItem
-            // 
-            this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
-            this.infoToolStripMenuItem.Text = "Info";
-            this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage9.Size = new System.Drawing.Size(591, 433);
+            this.tabPage9.TabIndex = 4;
+            this.tabPage9.Text = "tabPage9";
+            this.tabPage9.UseVisualStyleBackColor = true;
             // 
             // FilePathInfoLBL
             // 
@@ -513,28 +568,6 @@
             this.FilePah_LBL.TabIndex = 9;
             this.FilePah_LBL.Tag = "[!] Null [!]";
             this.FilePah_LBL.Text = "[!] Null [!]";
-            // 
-            // UnknownGeoHitTableSection_DGV
-            // 
-            this.UnknownGeoHitTableSection_DGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.UnknownGeoHitTableSection_DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.UnknownGeoHitTableSection_DGV.Location = new System.Drawing.Point(0, 0);
-            this.UnknownGeoHitTableSection_DGV.Name = "UnknownGeoHitTableSection_DGV";
-            this.UnknownGeoHitTableSection_DGV.RowTemplate.Height = 21;
-            this.UnknownGeoHitTableSection_DGV.Size = new System.Drawing.Size(193, 371);
-            this.UnknownGeoHitTableSection_DGV.TabIndex = 9;
-            // 
-            // tabPage9
-            // 
-            this.tabPage9.Location = new System.Drawing.Point(4, 22);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(591, 433);
-            this.tabPage9.TabIndex = 4;
-            this.tabPage9.Text = "tabPage9";
-            this.tabPage9.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -565,6 +598,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.UnknownGeoHitTableSection_DGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GeoHitItemTableDGV)).EndInit();
             this.tabPage5.ResumeLayout(false);
             this.tabControl3.ResumeLayout(false);
@@ -572,8 +606,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.EffectParamsColorSectionDGV)).EndInit();
             this.tabPage8.ResumeLayout(false);
             this.tabPage8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UnknownGeoHitTableSection_DGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EffectParams_UnknownSection_DGV)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -605,7 +638,7 @@
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.TabPage tabPage8;
         private System.Windows.Forms.ComboBox EffectParam_NameSelectComboBox;
-        private System.Windows.Forms.DataGridView dataGridView5;
+        private System.Windows.Forms.DataGridView EffectParams_UnknownSection_DGV;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label4;
@@ -625,6 +658,10 @@
         private System.Windows.Forms.Label FilePah_LBL;
         private System.Windows.Forms.DataGridView UnknownGeoHitTableSection_DGV;
         private System.Windows.Forms.TabPage tabPage9;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addRowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteRowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem insertSelectedRowToolStripMenuItem;
     }
 }
 

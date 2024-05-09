@@ -1,0 +1,34 @@
+C:\Users\User\source\repos\MK7 Binary Data Editor\MK7 Binary Data Editor\bin\Debug\MK7 Binary Data Editor.exe.config
+C:\Users\User\source\repos\MK7 Binary Data Editor\MK7 Binary Data Editor\bin\Debug\MK7 Binary Data Editor.exe
+C:\Users\User\source\repos\MK7 Binary Data Editor\MK7 Binary Data Editor\bin\Debug\MK7 Binary Data Editor.pdb
+C:\Users\User\source\repos\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7_Binary_Data_Editor.Form1.resources
+C:\Users\User\source\repos\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7_Binary_Data_Editor.Properties.Resources.resources
+C:\Users\User\source\repos\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.csproj.GenerateResource.cache
+C:\Users\User\source\repos\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.exe
+C:\Users\User\source\repos\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.pdb
+C:\Users\User\Desktop\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7_Binary_Data_Editor.Form1.resources
+C:\Users\User\Desktop\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7_Binary_Data_Editor.Properties.Resources.resources
+C:\Users\User\Desktop\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.csproj.GenerateResource.cache
+C:\Users\User\Desktop\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.exe
+C:\Users\User\Desktop\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.pdb
+C:\Users\User\Desktop\MK7 Binary Data Editor\MK7 Binary Data Editor\bin\Debug\MK7 Binary Data Editor.exe.config
+C:\Users\User\Desktop\MK7 Binary Data Editor\MK7 Binary Data Editor\bin\Debug\MK7 Binary Data Editor.exe
+C:\Users\User\Desktop\MK7 Binary Data Editor\MK7 Binary Data Editor\bin\Debug\MK7 Binary Data Editor.pdb
+C:\Users\User\Desktop\new BE_MK7\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7_Binary_Data_Editor.Form1.resources
+C:\Users\User\Desktop\new BE_MK7\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7_Binary_Data_Editor.Properties.Resources.resources
+C:\Users\User\Desktop\new BE_MK7\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.csproj.GenerateResource.cache
+C:\Users\User\Desktop\new BE_MK7\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\new BE_MK7\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.exe
+C:\Users\User\Desktop\new BE_MK7\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.pdb
+C:\Users\User\Desktop\new BE_MK7\MK7 Binary Data Editor\MK7 Binary Data Editor\bin\Debug\MK7 Binary Data Editor.exe.config
+C:\Users\User\Desktop\new BE_MK7\MK7 Binary Data Editor\MK7 Binary Data Editor\bin\Debug\MK7 Binary Data Editor.exe
+C:\Users\User\Desktop\new BE_MK7\MK7 Binary Data Editor\MK7 Binary Data Editor\bin\Debug\MK7 Binary Data Editor.pdb
+C:\Users\User\Desktop\new BE_MK7\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.csprojAssemblyReference.cache
+C:\Users\User\source\repos\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.csproj.SuggestedBindingRedirects.cache
+C:\Users\User\Desktop\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7_Binary_Data_Editor.ParamBinSelectorForm.resources
+C:\Users\User\source\repos\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7 Binary Data Editor.csproj.SuggestedBindingRedirects.cache
+C:\Users\User\source\repos\MK7 Binary Data Editor\MK7 Binary Data Editor\obj\Debug\MK7_Binary_Data_Editor.ParamBinSelectorForm.resources

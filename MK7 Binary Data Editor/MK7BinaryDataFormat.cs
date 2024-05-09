@@ -507,11 +507,11 @@ namespace MK7_Binary_Data_Editor
             }
         }
 
-        public Dictionary<int, Data2> Data2_List { get; set; }
+        public Dictionary<int, Data2> Data2_List { get; set; } //Page
         public class Data2
         {
             public char[] Label_String { get; set; } //0x20(32byte)
-            public List<List<float[]>> ParamValue_List { get; set; }
+            public List<List<float[]>> ParamValue_List { get; set; } //Tables
 
             public void ReadData2(BinaryReader br, uint Data2_RowCount, uint Data2_CellCount)
             {
@@ -620,10 +620,11 @@ namespace MK7_Binary_Data_Editor
             //WriteLength
             bw.BaseStream.Position = Data2_LengthBeginPos - 4;
             bw.Write(Data2_LengthEndPos - Data2_LengthBeginPos);
+            bw.BaseStream.Position = Data2_LengthEndPos;
 
             for (int Data2_Count = 0; Data2_Count < Data2_TableCount; Data2_Count++) //42
             {
-                Data2_List[Data2_Count].WriteData2(bw, Data2_RowCount, Data2_CellCount);
+                Data2_List[Data2_Count].WriteData2(bw, Data2_CellCount, Data2_RowCount);
 
                 //Data2 data2_Value = new Data2();
                 //data2_Value.ReadData2(br, Data2_RowCount, Data2_CellCount);
@@ -648,6 +649,11 @@ namespace MK7_Binary_Data_Editor
 
     public class KartConstructInfo
     {
+        //KartBody : 0x10
+
+        //Data : 0xFDCC, float (0x4)
+
+
         public enum Type
         {
             All = 54,
@@ -657,12 +663,759 @@ namespace MK7_Binary_Data_Editor
         public byte Unknown1 { get; set; }
         public byte Unknown2 { get; set; }
         public ushort Unknown3 { get; set; }
-        public uint Unknown4 { get; set; }
+        public uint UnknownDataCount { get; set; }
 
-        public UnknownData1 UnknownData1_d { get; set; }
-        public class UnknownData1
+        public float[] UnknownByteArray1 { get; set; } //0x8
+
+        //public List<float> UnknownFloatArray { get; set; } //UnknownDataCount
+
+        public List<UnknownDataArea> UnknownDataAreaList { get; set; }
+        public class UnknownDataArea
         {
-            public float D1 { get; set; }
+            public float Data_1 { get; set; }
+            public float Data_2 { get; set; }
+
+            public void ReadUnknownDataArea(BinaryReader br)
+            {
+                Data_1 = br.ReadSingle();
+                Data_2 = br.ReadSingle();
+            }
+
+            public void WriteUnknownDataArea(BinaryWriter bw)
+            {
+                bw.Write(Data_1);
+                bw.Write(Data_2);
+            }
+
+            public UnknownDataArea(float Data_1, float Data_2)
+            {
+                this.Data_1 = Data_1;
+                this.Data_2 = Data_2;
+            }
+
+            public UnknownDataArea()
+            {
+                Data_1 = 0;
+                Data_2 = 0;
+            }
+        }
+
+
+        public List<UnknownCharacterParam> UnknownCharacterParams { get; set; }
+        public class UnknownCharacterParam
+        {
+            public int Param1 { get; set; }
+            public int Param2 { get; set; }
+            public int Param3 { get; set; }
+            public int Param4 { get; set; }
+            public int Param5 { get; set; }
+            public int Param6 { get; set; }
+            public int Param7 { get; set; }
+
+            public void ReadUnknownCharacterParam(BinaryReader br)
+            {
+                Param1 = br.ReadInt32();
+                Param2 = br.ReadInt32();
+                Param3 = br.ReadInt32();
+                Param4 = br.ReadInt32();
+                Param5 = br.ReadInt32();
+                Param6 = br.ReadInt32();
+                Param7 = br.ReadInt32();
+            }
+
+            public UnknownCharacterParam()
+            {
+                Param1 = 0;
+                Param2 = 0;
+                Param3 = 0;
+                Param4 = 0;
+                Param5 = 0;
+                Param6 = 0;
+                Param7 = 0;
+            }
+        }
+
+
+        //RowCOunt = 21(?)
+
+        //public byte[] UnknownByteArray2 { get; set; } //504 byte
+
+        //14
+
+        //public List<UnknownCharacterParam> UnknownCharacterParams { get; set; }
+        //public class UnknownCharacterParam
+        //{
+        //    public byte Param1 { get; set; }
+        //    public byte Param2 { get; set; }
+        //    public byte Param3 { get; set; }
+        //    public byte Param4 { get; set; }
+        //    public byte Param5 { get; set; }
+        //    public byte Param6 { get; set; }
+        //    public byte Param7 { get; set; }
+        //    public byte Param8 { get; set; }
+        //    public byte Param9 { get; set; }
+        //    public byte Param10 { get; set; }
+        //    public byte Param11 { get; set; }
+        //    public byte Param12 { get; set; }
+        //    public byte Param13 { get; set; }
+        //    public byte Param14 { get; set; }
+
+        //    public void ReadUnknownCharacterParam(BinaryReader br)
+        //    {
+        //        Param1 = br.ReadByte();
+        //        Param2 = br.ReadByte();
+        //        Param3 = br.ReadByte();
+        //        Param4 = br.ReadByte();
+        //        Param5 = br.ReadByte();
+        //        Param6 = br.ReadByte();
+        //        Param7 = br.ReadByte();
+        //        Param8 = br.ReadByte();
+        //        Param9 = br.ReadByte();
+        //        Param10 = br.ReadByte();
+        //        Param11 = br.ReadByte();
+        //        Param12 = br.ReadByte();
+        //        Param13 = br.ReadByte();
+        //        Param14 = br.ReadByte();
+        //    }
+
+        //    public UnknownCharacterParam()
+        //    {
+        //        Param1 = 0x00;
+        //        Param2 = 0x00;
+        //        Param3 = 0x00;
+        //        Param4 = 0x00;
+        //        Param5 = 0x00;
+        //        Param6 = 0x00;
+        //        Param7 = 0x00;
+        //        Param8 = 0x00;
+        //        Param9 = 0x00;
+        //        Param10 = 0x00;
+        //        Param11 = 0x00;
+        //        Param12 = 0x00;
+        //        Param13 = 0x00;
+        //        Param14 = 0x00;
+        //    }
+        //}
+
+        //Count : 1
+        public List<Screw> Screws { get; set; }
+        public class Screw
+        {
+            public char[] ScrewNameCharArray { get; set; } //0x16
+
+            public void ReadScrew(BinaryReader br)
+            {
+                ScrewNameCharArray = br.ReadChars(16);
+            }
+
+            public Screw()
+            {
+                ScrewNameCharArray = new char[16];
+            }
+        }
+
+        //Count : 7
+        public List<Wing> Wings { get; set; }
+        public class Wing
+        {
+            public char[] WingNameCharArray { get; set; } //0x16
+
+            public void ReadWing(BinaryReader br)
+            {
+                WingNameCharArray = br.ReadChars(16);
+            }
+
+            public Wing()
+            {
+                WingNameCharArray = new char[16];
+            }
+        }
+
+        //Count : 10
+        public List<Tire> Tires { get; set; }
+        public class Tire
+        {
+            public char[] TireAbbreviationNameCharArray { get; set; } //0x8
+            public char[] TireNameCharArray { get; set; } //0x16
+
+            public void ReadTire(BinaryReader br)
+            {
+                TireAbbreviationNameCharArray = br.ReadChars(8);
+                TireNameCharArray = br.ReadChars(16);
+            }
+
+            public Tire()
+            {
+                TireAbbreviationNameCharArray = new char[8];
+                TireNameCharArray = new char[16];
+            }
+        }
+
+        //Count : 17
+        public List<Body> Bodies { get; set; }
+        public class Body
+        {
+            public char[] BodyNameCharArray { get; set; } //0x16
+
+            public void ReadBody(BinaryReader br)
+            {
+                BodyNameCharArray = br.ReadChars(16);
+            }
+
+            public Body()
+            {
+                BodyNameCharArray = new char[16];
+            }
+        }
+
+        //Count : 18
+        public List<Character> Characters { get; set; }
+        public class Character
+        {
+            public enum Weight
+            {
+                L,
+                M,
+                S,
+            }
+
+            public float UnknownValue1 { get; set; }
+            public char[] CharacterAbbreviationName { get; set; } //0x4
+            public char WeightType { get; set; } //0x1
+            public byte UnknownValue2 { get; set; }
+            public byte UnknownValue3 { get; set; }
+            public byte UnknownValue4 { get; set; }
+            public char[] CharacterName { get; set; } //0x12
+
+            public void ReadCharacter(BinaryReader br)
+            {
+                UnknownValue1 = br.ReadSingle();
+                CharacterAbbreviationName = br.ReadChars(4);
+                WeightType = br.ReadChar();
+                UnknownValue2 = br.ReadByte();
+                UnknownValue3 = br.ReadByte();
+                UnknownValue4 = br.ReadByte();
+                CharacterName = br.ReadChars(12);
+            }
+
+            public Character()
+            {
+                UnknownValue1 = 0;
+                CharacterAbbreviationName = new char[4];
+                WeightType = new char();
+                UnknownValue2 = 0x00;
+                UnknownValue3 = 0x00;
+                UnknownValue4 = 0x00;
+                CharacterName = new char[12];
+            }
+        }
+
+        //(5200 / 4) / 52 = 25 [*]
+        //(5200 / 4) / 50 = 26
+        //(5200 / 4) / 26 = 50
+        public List<UnknownDataArea2> UnknownDataArea2_List { get; set; } //25
+        public class UnknownDataArea2
+        {
+            public float[] FloatData { get; set; } //52
+
+            public void ReadUnknownDataArea2(BinaryReader br)
+            {
+                for (int i = 0; i < 52; i++)
+                {
+                    FloatData[i] = br.ReadSingle();
+                }
+            }
+
+            public void WriteUnknownDataArea2(BinaryWriter bw)
+            {
+                for (int i = 0; i < 52; i++)
+                {
+                    bw.Write(FloatData[i]);
+                }
+            }
+
+            public UnknownDataArea2()
+            {
+                FloatData = new float[52];
+            }
+        }
+
+        //(59772 / 4) / 17 
+        public List<UnknownDataArea3> UnknownDataArea3_List { get; set; }
+        public class UnknownDataArea3
+        {
+            public float[] Data0_Array { get; set; } //17
+
+            public List<Data1> Data1_List { get; set; }
+            public class Data1
+            {
+                //Daat 1
+                //304 / 4 / 19 = 4
+                //304 / 4 / 4 = 19 [*]
+
+                public float[] Data1_Array { get; set; }
+
+                public void Read_Data1Array(BinaryReader br)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        Data1_Array[i] = br.ReadSingle();
+                    }
+                }
+
+                public void Write_Data1Array(BinaryWriter bw)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        bw.Write(Data1_Array[i]);
+                    }
+                }
+
+                public Data1()
+                {
+                    Data1_Array = new float[4];
+                }
+            }
+
+            public List<Data2> Data2_List { get; set; }
+            public class Data2
+            {
+                //Data 2
+                //504 / 4 / 18 = 7
+                //504 / 4 / 7 = 18 [*]
+
+                public float[] Data2_Array { get; set; }
+
+                public void Read_Data2Array(BinaryReader br)
+                {
+                    for (int i = 0; i < 7; i++)
+                    {
+                        Data2_Array[i] = br.ReadSingle();
+                    }
+                }
+
+                public void Write_Data2Array(BinaryWriter bw)
+                {
+                    for (int i = 0; i < 7; i++)
+                    {
+                        bw.Write(Data2_Array[i]);
+                    }
+                }
+
+                public Data2()
+                {
+                    Data2_Array = new float[7];
+                }
+            }
+
+            public List<Data3> Data3_List { get; set; }
+            public class Data3
+            {
+                //Data 3
+                //2640 / 4 / 20 = 33 [*]
+                //2640 / 4 / 33 = 20
+                //2640 / 4 / 44 = 15
+                //2640 / 4 / 15 = 44
+
+                public float[] Data3_Array { get; set; }
+
+                public void Read_Data3Array(BinaryReader br)
+                {
+                    for (int i = 0; i < 20; i++)
+                    {
+                        Data3_Array[i] = br.ReadSingle();
+                    }
+                }
+
+                public void Write_Data3Array(BinaryWriter bw)
+                {
+                    for (int i = 0; i < 20; i++)
+                    {
+                        bw.Write(Data3_Array[i]);
+                    }
+                }
+
+                public Data3()
+                {
+                    Data3_Array = new float[20];
+                }
+            }
+
+            public void ReadUnknownDataArea3(BinaryReader br)
+            {
+                for (int i = 0; i < 17; i++)
+                {
+                    Data0_Array[i] = br.ReadSingle();
+                }
+
+                for (int i = 0; i < 19; i++)
+                {
+                    Data1 data1 = new Data1();
+                    data1.Read_Data1Array(br);
+                    Data1_List.Add(data1);
+                }
+
+                for (int i = 0; i < 18; i++)
+                {
+                    Data2 data2 = new Data2();
+                    data2.Read_Data2Array(br);
+                    Data2_List.Add(data2);
+                }
+
+                for (int i = 0; i < 20; i++)
+                {
+                    Data3 data3 = new Data3();
+                    data3.Read_Data3Array(br);
+                    Data3_List.Add(data3);
+                }
+            }
+
+            public void WriteUnknownDataArea3(BinaryWriter bw)
+            {
+                for (int i = 0; i < 17; i++)
+                {
+                    bw.Write(Data0_Array[i]);
+                }
+
+                for (int i = 0; i < 19; i++)
+                {
+                    Data1_List[i].Write_Data1Array(bw);
+                }
+
+                for (int i = 0; i < 18; i++)
+                {
+                    Data2_List[i].Write_Data2Array(bw);
+                }
+
+                for (int i = 0; i < 20; i++)
+                {
+                    Data3_List[i].Write_Data3Array(bw);
+                }
+            }
+
+            public UnknownDataArea3()
+            {
+                Data0_Array = new float[17];
+                Data1_List = new List<Data1>();
+                Data2_List = new List<Data2>();
+                Data3_List = new List<Data3>();
+
+            }
+        }
+
+
+
+
+        //26
+
+
+        //public List<UnknownDataArea2> UnknownDataArea2_List { get; set; }
+        //public class UnknownDataArea2
+        //{
+        //    public float Data_1 { get; set; }
+        //    public float Data_2 { get; set; }
+
+        //    public void ReadUnknownDataArea2(BinaryReader br)
+        //    {
+        //        Data_1 = br.ReadSingle();
+        //        Data_2 = br.ReadSingle();
+        //    }
+
+        //    public void WriteUnknownDataArea2(BinaryWriter bw)
+        //    {
+        //        bw.Write(Data_1);
+        //        bw.Write(Data_2);
+        //    }
+
+        //    public UnknownDataArea2(float Data_1, float Data_2)
+        //    {
+        //        this.Data_1 = Data_1;
+        //        this.Data_2 = Data_2;
+        //    }
+
+        //    public UnknownDataArea2()
+        //    {
+        //        Data_1 = 0;
+        //        Data_2 = 0;
+        //    }
+        //}
+
+        //// (720 / 4) * 10 = 18, (720 / 4) * 18 = 10
+        //public List<UnknownDataArea3> UnknownDataArea3_List { get; set; }
+        //public class UnknownDataArea3
+        //{
+        //    public float Data_1 { get; set; }
+        //    public float Data_2 { get; set; }
+        //    public float Data_3 { get; set; }
+        //    public float Data_4 { get; set; }
+        //    public float Data_5 { get; set; }
+        //    public float Data_6 { get; set; }
+        //    public float Data_7 { get; set; }
+        //    public float Data_8 { get; set; }
+        //    public float Data_9 { get; set; }
+        //    public float Data_10 { get; set; }
+
+        //    //public float Data_11 { get; set; }
+        //    //public float Data_12 { get; set; }
+        //    //public float Data_13 { get; set; }
+        //    //public float Data_14 { get; set; }
+        //    //public float Data_15 { get; set; }
+        //    //public float Data_16 { get; set; }
+        //    //public float Data_17 { get; set; }
+        //    //public float Data_18 { get; set; }
+
+        //    public void ReadUnknownDataArea3(BinaryReader br)
+        //    {
+        //        Data_1 = br.ReadSingle();
+        //        Data_2 = br.ReadSingle();
+        //        Data_3 = br.ReadSingle();
+        //        Data_4 = br.ReadSingle();
+        //        Data_5 = br.ReadSingle();
+        //        Data_6 = br.ReadSingle();
+        //        Data_7 = br.ReadSingle();
+        //        Data_8 = br.ReadSingle();
+        //        Data_9 = br.ReadSingle();
+        //        Data_10 = br.ReadSingle();
+
+
+        //        //Data_11 = br.ReadSingle();
+        //        //Data_12 = br.ReadSingle();
+        //        //Data_13 = br.ReadSingle();
+        //        //Data_14 = br.ReadSingle();
+        //        //Data_15 = br.ReadSingle();
+        //        //Data_16 = br.ReadSingle();
+        //        //Data_17 = br.ReadSingle();
+        //        //Data_18 = br.ReadSingle();
+        //    }
+
+        //    public void WriteUnknownDataArea3(BinaryWriter bw)
+        //    {
+        //        bw.Write(Data_1);
+        //        bw.Write(Data_2);
+        //        bw.Write(Data_3);
+        //        bw.Write(Data_4);
+        //        bw.Write(Data_5);
+        //        bw.Write(Data_6);
+        //        bw.Write(Data_7);
+        //        bw.Write(Data_8);
+        //        bw.Write(Data_9);
+        //        bw.Write(Data_10);
+
+
+        //        //bw.Write(Data_11);
+        //        //bw.Write(Data_12);
+        //        //bw.Write(Data_13);
+        //        //bw.Write(Data_14);
+        //        //bw.Write(Data_15);
+        //        //bw.Write(Data_16);
+        //        //bw.Write(Data_17);
+        //        //bw.Write(Data_18);
+
+        //    }
+
+        //    //public UnknownDataArea3(float Data_1, float Data_2)
+        //    //{
+        //    //    this.Data_1 = Data_1;
+        //    //    this.Data_2 = Data_2;
+        //    //}
+
+        //    public UnknownDataArea3()
+        //    {
+        //        Data_1 = 0;
+        //        Data_2 = 0;
+        //        Data_3 = 0;
+        //        Data_4 = 0;
+        //        Data_5 = 0;
+        //        Data_6 = 0;
+        //        Data_7 = 0;
+        //        Data_8 = 0;
+        //        Data_9 = 0;
+        //        Data_10 = 0;
+
+
+        //        //Data_11 = 0;
+        //        //Data_12 = 0;
+        //        //Data_13 = 0;
+        //        //Data_14 = 0;
+        //        //Data_15 = 0;
+        //        //Data_16 = 0;
+        //        //Data_17 = 0;
+        //        //Data_18 = 0;
+        //    }
+        //}
+
+
+        ////public float[] Data0 { get; set; } //880 bytes
+
+
+        //public List<UnknownData1> UnknownData1_List { get; set; } //Count : 21
+        //public class UnknownData1
+        //{
+        //    public float D1 { get; set; }
+        //    public float D2 { get; set; }
+        //    public float D3 { get; set; }
+        //    public float D4 { get; set; }
+        //    public float D5 { get; set; }
+        //    public float D6 { get; set; }
+        //    public float D7 { get; set; }
+        //    public float D8 { get; set; }
+        //    public float D9 { get; set; }
+        //    public float D10 { get; set; }
+        //    public float D11 { get; set; }
+        //    public float D12 { get; set; }
+        //    public float D13 { get; set; }
+        //    public float D14 { get; set; }
+        //    public float D15 { get; set; }
+        //    public float D16 { get; set; }
+        //    public float D17 { get; set; }
+        //    public float D18 { get; set; }
+        //    public float D19 { get; set; }
+        //    public float D20 { get; set; }
+        //    public float D21 { get; set; }
+        //    public float D22 { get; set; }
+        //    public float D23 { get; set; }
+        //    public float D24 { get; set; }
+        //    public float D25 { get; set; }
+        //    public float D26 { get; set; }
+        //    public float D27 { get; set; }
+        //    public float D28 { get; set; }
+        //    public float D29 { get; set; }
+        //    public float D30 { get; set; }
+        //    public float D31 { get; set; }
+        //    public float D32 { get; set; }
+        //    public float D33 { get; set; }
+        //}
+
+
+        //public List<UnknownData1> UnknownData1_List { get; set; } //Count : 21
+        //public class UnknownData1
+        //{
+        //    public float D1 { get; set; }
+        //    public float D2 { get; set; }
+        //    public float D3 { get; set; }
+        //    public float D4 { get; set; }
+        //    public float D5 { get; set; }
+        //    public float D6 { get; set; }
+        //    public float D7 { get; set; }
+        //    public float D8 { get; set; }
+        //    public float D9 { get; set; }
+        //    public float D10 { get; set; }
+        //    public float D11 { get; set; }
+        //    public float D12 { get; set; }
+        //    public float D13 { get; set; }
+        //    public float D14 { get; set; }
+        //    public float D15 { get; set; }
+        //    public float D16 { get; set; }
+        //    public float D17 { get; set; }
+        //    public float D18 { get; set; }
+        //    public float D19 { get; set; }
+        //    public float D20 { get; set; }
+        //    public float D21 { get; set; }
+        //    public float D22 { get; set; }
+        //    public float D23 { get; set; }
+        //    public float D24 { get; set; }
+        //    public float D25 { get; set; }
+        //    public float D26 { get; set; }
+        //    public float D27 { get; set; }
+        //    public float D28 { get; set; }
+        //    public float D29 { get; set; }
+        //    public float D30 { get; set; }
+        //    public float D31 { get; set; }
+        //    public float D32 { get; set; }
+        //    public float D33 { get; set; }
+        //}
+
+        public void ReadKartConstructInfo(BinaryReader br)
+        {
+            Unknown1 = br.ReadByte();
+            Unknown2 = br.ReadByte();
+            Unknown3 = br.ReadUInt16();
+            UnknownDataCount = br.ReadUInt32();
+            UnknownByteArray1 = new float[] { br.ReadSingle(), br.ReadSingle() };
+
+            for (int i = 0; i < 18; i++)
+            {
+                UnknownDataArea unknownDataArea = new UnknownDataArea();
+                unknownDataArea.ReadUnknownDataArea(br);
+                UnknownDataAreaList.Add(unknownDataArea);
+            }
+
+            for (int i = 0; i < 18; i++)
+            {
+                UnknownCharacterParam unknownCharacterParam = new UnknownCharacterParam();
+                unknownCharacterParam.ReadUnknownCharacterParam(br);
+                UnknownCharacterParams.Add(unknownCharacterParam);
+            }
+
+            for (int i = 0; i < 1; i++)
+            {
+                Screw screw = new Screw();
+                screw.ReadScrew(br);
+                Screws.Add(screw);
+            }
+
+            for (int i = 0; i < 7; i++)
+            {
+                Wing wing = new Wing();
+                wing.ReadWing(br);
+                Wings.Add(wing);
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                Tire tire = new Tire();
+                tire.ReadTire(br);
+                Tires.Add(tire);
+            }
+
+            for (int i = 0; i < 17; i++)
+            {
+                Body body = new Body();
+                body.ReadBody(br);
+                Bodies.Add(body);
+            }
+
+            for (int i = 0; i < 18; i++)
+            {
+                Character character = new Character();
+                character.ReadCharacter(br);
+                Characters.Add(character);
+            }
+
+            for (int i = 0; i < 25; i++)
+            {
+                UnknownDataArea2 unknownDataArea2 = new UnknownDataArea2();
+                unknownDataArea2.ReadUnknownDataArea2(br);
+                UnknownDataArea2_List.Add(unknownDataArea2);
+            }
+
+            for (int i = 0; i < 17; i++)
+            {
+                UnknownDataArea3 unknownDataArea3 = new UnknownDataArea3();
+                unknownDataArea3.ReadUnknownDataArea3(br);
+                UnknownDataArea3_List.Add(unknownDataArea3);
+            }
+        }
+
+        public KartConstructInfo()
+        {
+            Unknown1 = 0x00;
+            Unknown2 = 0x00;
+            Unknown3 = 0;
+            UnknownDataCount = 0;
+            UnknownByteArray1 = new float[2];
+
+            UnknownDataAreaList = new List<UnknownDataArea>();
+            UnknownCharacterParams = new List<UnknownCharacterParam>();
+
+            Screws = new List<Screw>();
+            Wings = new List<Wing>();
+            Tires = new List<Tire>();
+            Bodies = new List<Body>();
+            Characters = new List<Character>();
+
+            UnknownDataArea2_List = new List<UnknownDataArea2>();
+            UnknownDataArea3_List = new List<UnknownDataArea3>();
         }
 
         public class Para_D1
@@ -698,15 +1451,4 @@ namespace MK7_Binary_Data_Editor
             }
         }
     }
-
-    //public class MinMaxValue
-    //{
-    //    public byte[] Data_MinValue { get; set; } //0x4((Data_MinValue * RowCount)
-    //    public byte[] Data_MaxValue { get; set; } //0x4((Data_MaxValue * RowCount)
-    //}
-
-    //public class Data_Value
-    //{
-    //    public byte[] DataValue { get; set; } //0x4(RowCount * CellCount)
-    //}
 }

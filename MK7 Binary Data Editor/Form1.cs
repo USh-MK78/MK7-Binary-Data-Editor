@@ -24,7 +24,7 @@ namespace MK7_Binary_Data_Editor
             GeoHitItemTableDGV.AllowUserToAddRows = false;
             UnknownGeoHitTableSection_DGV.AllowUserToAddRows = false;
             EffectParamsColorSectionDGV.AllowUserToAddRows = false;
-            dataGridView5.AllowUserToAddRows = false;
+            EffectParams_UnknownSection_DGV.AllowUserToAddRows = false;
 
             tabControl1.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top);
             tabControl2.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top);
@@ -33,7 +33,7 @@ namespace MK7_Binary_Data_Editor
             label1.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
             label2.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
 
-            dataGridView5.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top);
+            EffectParams_UnknownSection_DGV.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top);
             EffectParam_NameSelectComboBox.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
             comboBox2.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
 
@@ -46,7 +46,12 @@ namespace MK7_Binary_Data_Editor
             FilePah_LBL.Text = FilePah_LBL.Tag.ToString();
         }
 
-        public EffectParams effectParams { get; set; }
+        //public EffectParams effectParams { get; set; }
+
+
+        public DataTableCreator EffectParamMain_DataTableCreator { get; set; }
+        //public Dictionary<int, List<DataTableCreator>> UnknownParam_DataTableCreatorDictionary { get; set; }
+        public DataTableSheetCreator UnknownParamDataTableSheetCreator { get; set; }
 
         private void Open_BinData(object sender, EventArgs e)
         {
@@ -203,7 +208,7 @@ namespace MK7_Binary_Data_Editor
                     FileStream fs = new FileStream(OpenEffectParams.FileName, FileMode.Open, FileAccess.Read);
                     BinaryReader br = new BinaryReader(fs);
 
-                    effectParams = new EffectParams();
+                    EffectParams effectParams = new EffectParams();
                     effectParams.ReadEffectParams(br);
 
                     #region EffectParamMian
@@ -229,28 +234,105 @@ namespace MK7_Binary_Data_Editor
                     }
 
                     EffectParamsColorSectionDGV.DataSource = EffectParamMainDataTableCreator.DataTable;
+
+                    EffectParamMain_DataTableCreator = EffectParamMainDataTableCreator;
                     #endregion
 
                     #region UnknownSectionValue
-                    string[] UnknownSectionValueStrArray = new string[] { "Value 1", "Value 2", "Value 3", "Value 4", "Value 5" };
-                    DataTableCreator UnknownSectionValueMainDataTableCreator = new DataTableCreator(UnknownSectionValueStrArray);
 
-                    //Add DGV
-                    for (int n = 0; n < effectParams.Data2_List[0].ParamValue_List[0].Count; n++)
+                    Dictionary<int, List<DataTableCreator>> PageTableDictionary = new Dictionary<int, List<DataTableCreator>>();
+                    for (int SheetCount = 0; SheetCount < effectParams.Data2_List.Count; SheetCount++)
                     {
-                        object[] RowObj = new object[]
-                        {
-                            effectParams.Data2_List[0].ParamValue_List[0][n][0],
-                            effectParams.Data2_List[0].ParamValue_List[0][n][1],
-                            effectParams.Data2_List[0].ParamValue_List[0][n][2],
-                            effectParams.Data2_List[0].ParamValue_List[0][n][3],
-                            effectParams.Data2_List[0].ParamValue_List[0][n][4]
-                        };
+                        List<DataTableCreator> DataTableCreatorList = new List<DataTableCreator>();
 
-                        UnknownSectionValueMainDataTableCreator.AddRow(RowObj);
+                        //Add DGV
+                        for (int TableCount = 0; TableCount < effectParams.Data2_List[SheetCount].ParamValue_List.Count; TableCount++)
+                        {
+                            string[] UnknownSectionValueStrArray = new string[] { "Value 1", "Value 2", "Value 3", "Value 4", "Value 5" };
+                            DataTableCreator UnknownSectionValueMainDataTableCreator = new DataTableCreator(UnknownSectionValueStrArray);
+
+                            for (int n = 0; n < effectParams.Data2_List[SheetCount].ParamValue_List[TableCount].Count; n++)
+                            {
+                                object[] RowObj = new object[]
+                                {
+                                    effectParams.Data2_List[SheetCount].ParamValue_List[TableCount][n][0],
+                                    effectParams.Data2_List[SheetCount].ParamValue_List[TableCount][n][1],
+                                    effectParams.Data2_List[SheetCount].ParamValue_List[TableCount][n][2],
+                                    effectParams.Data2_List[SheetCount].ParamValue_List[TableCount][n][3],
+                                    effectParams.Data2_List[SheetCount].ParamValue_List[TableCount][n][4]
+                                };
+
+                                UnknownSectionValueMainDataTableCreator.AddRow(RowObj);
+                            }
+
+                            DataTableCreatorList.Add(UnknownSectionValueMainDataTableCreator);
+                        }
+
+                        PageTableDictionary.Add(SheetCount, DataTableCreatorList);
                     }
 
-                    dataGridView5.DataSource = UnknownSectionValueMainDataTableCreator.DataTable;
+                    UnknownParamDataTableSheetCreator = new DataTableSheetCreator(PageTableDictionary);
+
+                    EffectParams_UnknownSection_DGV.DataSource = UnknownParamDataTableSheetCreator.DataTableSheetDictionary[0][0].DataTable;
+                    
+
+
+                    //Dictionary<int, List<DataTableCreator>> PageTableDictionary = new Dictionary<int, List<DataTableCreator>>();
+                    //for (int SheetCount = 0; SheetCount < effectParams.Data2_List.Count; SheetCount++)
+                    //{
+                    //    List<DataTableCreator> DataTableCreatorList = new List<DataTableCreator>();
+
+                    //    //Add DGV
+                    //    for (int TableCount = 0; TableCount < effectParams.Data2_List[SheetCount].ParamValue_List.Count; TableCount++)
+                    //    {
+                    //        string[] UnknownSectionValueStrArray = new string[] { "Value 1", "Value 2", "Value 3", "Value 4", "Value 5" };
+                    //        DataTableCreator UnknownSectionValueMainDataTableCreator = new DataTableCreator(UnknownSectionValueStrArray);
+
+                    //        for (int n = 0; n < effectParams.Data2_List[SheetCount].ParamValue_List[TableCount].Count; n++)
+                    //        {
+                    //            object[] RowObj = new object[]
+                    //            {
+                    //                effectParams.Data2_List[SheetCount].ParamValue_List[TableCount][n][0],
+                    //                effectParams.Data2_List[SheetCount].ParamValue_List[TableCount][n][1],
+                    //                effectParams.Data2_List[SheetCount].ParamValue_List[TableCount][n][2],
+                    //                effectParams.Data2_List[SheetCount].ParamValue_List[TableCount][n][3],
+                    //                effectParams.Data2_List[SheetCount].ParamValue_List[TableCount][n][4]
+                    //            };
+
+                    //            UnknownSectionValueMainDataTableCreator.AddRow(RowObj);
+                    //        }
+
+                    //        DataTableCreatorList.Add(UnknownSectionValueMainDataTableCreator);
+                    //    }
+
+                    //    PageTableDictionary.Add(SheetCount, DataTableCreatorList);
+                    //}
+
+                    //dataGridView5.DataSource = PageTableDictionary[0][0].DataTable;
+                    //UnknownParam_DataTableCreatorDictionary = PageTableDictionary;
+
+                    #region DELETE
+                    //string[] UnknownSectionValueStrArray = new string[] { "Value 1", "Value 2", "Value 3", "Value 4", "Value 5" };
+                    //DataTableCreator UnknownSectionValueMainDataTableCreator = new DataTableCreator(UnknownSectionValueStrArray);
+
+                    ////Add DGV
+                    //for (int n = 0; n < effectParams.Data2_List[0].ParamValue_List[0].Count; n++)
+                    //{
+                    //    object[] RowObj = new object[]
+                    //    {
+                    //        effectParams.Data2_List[0].ParamValue_List[0][n][0],
+                    //        effectParams.Data2_List[0].ParamValue_List[0][n][1],
+                    //        effectParams.Data2_List[0].ParamValue_List[0][n][2],
+                    //        effectParams.Data2_List[0].ParamValue_List[0][n][3],
+                    //        effectParams.Data2_List[0].ParamValue_List[0][n][4]
+                    //    };
+
+                    //    UnknownSectionValueMainDataTableCreator.AddRow(RowObj);
+                    //}
+
+                    //dataGridView5.DataSource = UnknownSectionValueMainDataTableCreator.DataTable;
+                    #endregion
+
                     #endregion
 
                     comboBox2.Items.AddRange(Enumerable.Range(0, Convert.ToInt32(effectParams.Data2_RowCount)).ToList().ConvertAll<object>(x => x).ToArray());
@@ -278,7 +360,15 @@ namespace MK7_Binary_Data_Editor
 
                 if (Open_KartConstructInfo.ShowDialog() == DialogResult.OK)
                 {
+                    FileStream fs = new FileStream(Open_KartConstructInfo.FileName, FileMode.Open, FileAccess.Read);
+                    BinaryReader br = new BinaryReader(fs);
 
+                    KartConstructInfo kartConstructInfo = new KartConstructInfo();
+                    kartConstructInfo.ReadKartConstructInfo(br);
+
+
+                    br.Close();
+                    fs.Close();
 
                     FilePah_LBL.Text = Open_KartConstructInfo.FileName;
                 }
@@ -469,8 +559,96 @@ namespace MK7_Binary_Data_Editor
                     FileStream fs = new FileStream(Save_EffectParams.FileName, FileMode.Create, FileAccess.Write);
                     BinaryWriter bw = new BinaryWriter(fs);
 
-                    //EffectParams e = new EffectParams();
-                    //e,Write(bw);
+
+                    #region Color
+                    DataTable EffectParamsColorSectionDataTable = DataGridView_DataTableConvertor.GetDataTable(EffectParamsColorSectionDGV, false);
+                    DataTableCreator EffectParamsColorSection_DataTableCreator = new DataTableCreator(EffectParamsColorSectionDataTable);
+
+                    List<EffectParams.Data1> Data1_List = new List<EffectParams.Data1>();
+                    for (int RowCount = 0; RowCount < EffectParamsColorSection_DataTableCreator.GetRowCount; RowCount++)
+                    {
+                        EffectParams.Data1 data1 = new EffectParams.Data1
+                        {
+                            Label_String = EffectParamsColorSection_DataTableCreator.GetValue(RowCount, 0).ToString().ToCharArray(),
+                            Color_RGBA_Data = new EffectParams.Data1.ColorRGBA_Data
+                            {
+                                R = float.Parse(EffectParamsColorSection_DataTableCreator.GetValue(RowCount, 1).ToString()),
+                                G = float.Parse(EffectParamsColorSection_DataTableCreator.GetValue(RowCount, 2).ToString()),
+                                B = float.Parse(EffectParamsColorSection_DataTableCreator.GetValue(RowCount, 3).ToString()),
+                                A = float.Parse(EffectParamsColorSection_DataTableCreator.GetValue(RowCount, 4).ToString())
+                            },
+                            Flag = new EffectParams.Data1.Flags
+                            {
+                                f1 = uint.Parse(EffectParamsColorSection_DataTableCreator.GetValue(RowCount, 5).ToString()),
+                                f2 = uint.Parse(EffectParamsColorSection_DataTableCreator.GetValue(RowCount, 6).ToString()),
+                                f3 = uint.Parse(EffectParamsColorSection_DataTableCreator.GetValue(RowCount, 7).ToString()),
+                                f4 = uint.Parse(EffectParamsColorSection_DataTableCreator.GetValue(RowCount, 8).ToString())
+                            }
+                        };
+
+                        Data1_List.Add(data1);
+
+
+                        //EffectParams.Data1 data1 = new EffectParams.Data1();
+                    }
+                    #endregion
+
+
+                    //List<EffectParams.Data2> data2s = new List<EffectParams.Data2>();
+                    Dictionary<int, EffectParams.Data2> data2s = new Dictionary<int, EffectParams.Data2>();
+                    for (int SheetCount = 0; SheetCount < UnknownParamDataTableSheetCreator.Count; SheetCount++)
+                    {
+                        List<List<float[]>> SheetList = new List<List<float[]>>();
+
+                        for (int TableCount = 0; TableCount < UnknownParamDataTableSheetCreator.DataTableSheetDictionary[SheetCount].Count; TableCount++)
+                        {
+                            List<float[]> TableList = new List<float[]>();
+                            for (int RowCount = 0; RowCount < UnknownParamDataTableSheetCreator.DataTableSheetDictionary[SheetCount][TableCount].GetRowCount; RowCount++)
+                            {
+                                float[] data = new float[UnknownParamDataTableSheetCreator.DataTableSheetDictionary[SheetCount][TableCount].GetColumnCount];
+
+                                //ColumnCount
+                                for (int ColumnCount = 0; ColumnCount < UnknownParamDataTableSheetCreator.DataTableSheetDictionary[SheetCount][TableCount].GetColumnCount; ColumnCount++)
+                                {
+                                    data[ColumnCount] = float.Parse(UnknownParamDataTableSheetCreator.DataTableSheetDictionary[SheetCount][TableCount].GetValue(RowCount, ColumnCount).ToString());
+                                }
+
+                                TableList.Add(data);
+                            }
+
+                            SheetList.Add(TableList);
+                        }
+
+
+                        EffectParams.Data2 data2 = new EffectParams.Data2
+                        {
+                            Label_String = EffectParam_NameSelectComboBox.Items[SheetCount].ToString().ToArray(),
+                            ParamValue_List = SheetList,
+                        };
+
+                        data2s.Add(SheetCount, data2);
+                    }
+
+
+
+
+                    EffectParams effectParams = new EffectParams
+                    {
+                        Type = 4,
+                        Data1_RowCount = (uint)EffectParamsColorSection_DataTableCreator.GetRowCount,
+                        Data1_CellCount = (uint)EffectParamsColorSection_DataTableCreator.GetColumnCount,
+                        Data2_CellCount = (uint)UnknownParamDataTableSheetCreator.DataTableSheetDictionary[0][0].GetColumnCount,
+                        Data2_RowCount = (uint)UnknownParamDataTableSheetCreator.DataTableSheetDictionary[0][0].GetRowCount,
+                        //Data2_TableCount = (uint)UnknownParam_DataTableCreatorDictionary.Count,
+                        Data2_TableCount = (uint)UnknownParamDataTableSheetCreator.DataTableSheetDictionary.Count,
+                        Data2_Offset = 0,
+                        Data1_List = Data1_List,
+                        Data2_List = data2s
+                        //Data2_List = new Dictionary<int, EffectParams.Data2>(),
+                    };
+
+
+                    effectParams.WriteEffectParams(bw);
 
 
                     bw.Close();
@@ -498,6 +676,12 @@ namespace MK7_Binary_Data_Editor
             GeoHitItemTableDGV.DataSource = null;
             UnknownGeoHitTableSection_DGV.DataSource = null;
 
+            EffectParamsColorSectionDGV.DataSource = null;
+            EffectParams_UnknownSection_DGV.DataSource = null;
+            EffectParam_NameSelectComboBox.Items.Clear();
+            EffectParam_NameSelectComboBox.Text = "";
+            comboBox2.Items.Clear();
+            comboBox2.Text = "";
 
             FilePah_LBL.Text = FilePah_LBL.Tag.ToString();
 
@@ -505,32 +689,17 @@ namespace MK7_Binary_Data_Editor
 
         private void EffectParam_NameSelectComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            dataGridView5.DataSource = null;
-
-            string[] UnknownSectionValueStrArray = new string[] { "Value 1", "Value 2", "Value 3", "Value 4", "Value 5" };
-            DataTableCreator UnknownSectionValueMainDataTableCreator = new DataTableCreator(UnknownSectionValueStrArray);
-
-            //Add DGV
-            for (int n = 0; n < effectParams.Data2_List[EffectParam_NameSelectComboBox.SelectedIndex].ParamValue_List[comboBox2.SelectedIndex].Count; n++)
-            {
-                object[] RowObj = new object[]
-                {
-                    effectParams.Data2_List[EffectParam_NameSelectComboBox.SelectedIndex].ParamValue_List[comboBox2.SelectedIndex][n][0],
-                    effectParams.Data2_List[EffectParam_NameSelectComboBox.SelectedIndex].ParamValue_List[comboBox2.SelectedIndex][n][1],
-                    effectParams.Data2_List[EffectParam_NameSelectComboBox.SelectedIndex].ParamValue_List[comboBox2.SelectedIndex][n][2],
-                    effectParams.Data2_List[EffectParam_NameSelectComboBox.SelectedIndex].ParamValue_List[comboBox2.SelectedIndex][n][3],
-                    effectParams.Data2_List[EffectParam_NameSelectComboBox.SelectedIndex].ParamValue_List[comboBox2.SelectedIndex][n][4]
-                };
-
-                UnknownSectionValueMainDataTableCreator.AddRow(RowObj);
-            }
-
-            dataGridView5.DataSource = UnknownSectionValueMainDataTableCreator.DataTable;
+            EffectParams_UnknownSection_DGV.DataSource = null;
+            EffectParams_UnknownSection_DGV.DataSource = UnknownParamDataTableSheetCreator.DataTableSheetDictionary[EffectParam_NameSelectComboBox.SelectedIndex][comboBox2.SelectedIndex].DataTable;
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            EffectParams_UnknownSection_DGV.DataSource = null;
+            if (EffectParam_NameSelectComboBox.SelectedIndex > -1)
+            {
+                EffectParams_UnknownSection_DGV.DataSource = UnknownParamDataTableSheetCreator.DataTableSheetDictionary[EffectParam_NameSelectComboBox.SelectedIndex][comboBox2.SelectedIndex].DataTable;
+            }
         }
 
         private void infoToolStripMenuItem_Click(object sender, EventArgs e)
